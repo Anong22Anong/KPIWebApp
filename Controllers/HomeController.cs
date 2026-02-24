@@ -46,7 +46,7 @@ public class HomeController : Controller
         return View(viewModel);
     }
 
-    public IActionResult Privacy()
+    public IActionResult Index()
     {
         return View();
     }
