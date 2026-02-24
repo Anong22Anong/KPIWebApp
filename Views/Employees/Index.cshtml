@@ -1,0 +1,57 @@
+@model IEnumerable<EmployeeViewModel>
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0"><i class="bi bi-people me-2"></i>Employees</h1>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Add Employee</a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th class="text-end">Target Sales</th>
+                            <th class="text-end">Actual Sales</th>
+                            <th class="text-end">Attendance</th>
+                            <th class="text-end">Final KPI</th>
+                            <th style="width: 140px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var e in Model)
+                        {
+                            <tr>
+                                <td><a asp-action="Details" asp-route-id="@e.Id">@e.Name</a></td>
+                                <td>@e.Department</td>
+                                <td class="text-end">@e.TargetSales.ToString("N2")</td>
+                                <td class="text-end">@e.ActualSales.ToString("N2")</td>
+                                <td class="text-end">@e.AttendanceDays / @e.TotalWorkingDays</td>
+                                <td class="text-end"><span class="badge bg-primary">@(e.FinalKpi?.ToString("N1") ?? "—")</span></td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@e.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-muted py-5">
+                <i class="bi bi-people display-4 d-block mb-2"></i>
+                <p class="mb-2">No employees yet.</p>
+                <a asp-action="Create" class="btn btn-primary">Add first employee</a>
+            </div>
+        }
+    </div>
+</div>

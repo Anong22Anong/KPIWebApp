@@ -1,0 +1,54 @@
+@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Employees</a></li>
+        <li class="breadcrumb-item active">@Model.Name</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">@Model.Name</h1>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">Details</div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Department</dt>
+                    <dd class="col-sm-8">@Model.Department</dd>
+                    <dt class="col-sm-4">Target Sales</dt>
+                    <dd class="col-sm-8">@Model.TargetSales.ToString("N2")</dd>
+                    <dt class="col-sm-4">Actual Sales</dt>
+                    <dd class="col-sm-8">@Model.ActualSales.ToString("N2")</dd>
+                    <dt class="col-sm-4">Attendance</dt>
+                    <dd class="col-sm-8">@Model.AttendanceDays / @Model.TotalWorkingDays days</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">KPI Scores</div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Sales Score (70%)</dt>
+                    <dd class="col-sm-7">@(Model.SalesScore?.ToString("N1") ?? "—")</dd>
+                    <dt class="col-sm-5">Attendance Score (30%)</dt>
+                    <dd class="col-sm-7">@(Model.AttendanceScore?.ToString("N1") ?? "—")</dd>
+                    <dt class="col-sm-5">Final KPI</dt>
+                    <dd class="col-sm-7"><span class="badge bg-primary fs-6">@(Model.FinalKpi?.ToString("N1") ?? "—")</span></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">KPI Dashboard</h1>
+    <a asp-controller="Employees" asp-action="Create" class="btn btn-primary">Add Employee</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small mb-2">Average KPI</h6>
+                <p class="display-6 mb-0 text-primary">@(Model.AverageKpi?.ToString("N1") ?? "—")</p>
+                <small class="text-muted">Across all employees</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small mb-3">Top 5 Employees by KPI</h6>
+                @if (Model.TopEmployees.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th class="text-end">Final KPI</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var i = 1; }
+                                @foreach (var e in Model.TopEmployees)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@e.Id">@e.Name</a></td>
+                                        <td>@e.Department</td>
+                                        <td class="text-end"><span class="badge bg-success">@(e.FinalKpi?.ToString("N1") ?? "—")</span></td>
+                                        <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">View</a></td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted mb-0">No employees yet. <a asp-controller="Employees" asp-action="Create">Add employees</a> to see KPIs.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h6 class="text-muted text-uppercase small mb-0">KPI Bar Chart</h6>
+    </div>
+    <div class="card-body">
+        @if (Model.EmployeeNames.Any())
+        {
+            <div class="chart-container" style="position: relative; height: 360px;">
+                <canvas id="kpiChart"></canvas>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted text-center py-5 mb-0">No data to display. Add employees to see the KPI chart.</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    @if (Model.EmployeeNames.Any())
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const ctx = document.getElementById('kpiChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.EmployeeNames)),
+                        datasets: [{
+                            label: 'Final KPI',
+                            data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.KpiValues)),
+                            backgroundColor: 'rgba(13, 110, 253, 0.7)',
+                            borderColor: 'rgb(13, 110, 253)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: { display: true, text: 'KPI Score' }
+                            },
+                            x: {
+                                title: { display: true, text: 'Employee' }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    }
+}

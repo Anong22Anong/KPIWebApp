@@ -1,0 +1,26 @@
+@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Delete Employee";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">Employees</a></li>
+        <li class="breadcrumb-item"><a asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></li>
+        <li class="breadcrumb-item active">Delete</li>
+    </ol>
+</nav>
+
+<h1 class="h3 mb-4 text-danger"><i class="bi bi-trash me-2"></i>Delete Employee</h1>
+
+<div class="card border-danger">
+    <div class="card-body">
+        <p class="lead">Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+        <p class="text-muted">Department: @Model.Department. This action cannot be undone.</p>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
