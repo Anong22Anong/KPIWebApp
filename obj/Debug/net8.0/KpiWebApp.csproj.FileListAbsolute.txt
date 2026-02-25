@@ -141,3 +141,4 @@ C:\Users\anong\KPIWebApp\obj\Debug\net8.0\refint\KpiWebApp.dll
 C:\Users\anong\KPIWebApp\obj\Debug\net8.0\KpiWebApp.pdb
 C:\Users\anong\KPIWebApp\obj\Debug\net8.0\KpiWebApp.genruntimeconfig.cache
 C:\Users\anong\KPIWebApp\obj\Debug\net8.0\ref\KpiWebApp.dll
+C:\Users\anong\KpiWebApp\obj\Debug\net8.0\KpiWebApp.sourcelink.json
