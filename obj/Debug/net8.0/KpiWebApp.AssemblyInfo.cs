@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KpiWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b50e0edba9bcb57e0ae2fe25587164196a25919")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a60f08820f7042d73c180a1fcbfc0189eb1448f0")]
 [assembly: System.Reflection.AssemblyProductAttribute("KpiWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KpiWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
